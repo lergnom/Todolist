@@ -12,7 +12,7 @@ export type PropsType = {
     title: string
     tasks: Array<TaskType>
 }
-
+ arra
 
 function App() {
     const task1 = [

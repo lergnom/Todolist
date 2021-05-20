@@ -17,6 +17,7 @@ export type PropsType = {
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValueType) => void
     addTask: (title: string) => void
+    checkBox: (id: string, isDone: boolean) => void
 }
 
 
@@ -51,6 +52,11 @@ function App() {
 
     }
 
+    function checkBox(id: string, isDone: boolean) {
+        let updateTasks = tasks.map(t => t.id === id ? {...t, isDone} : t)
+        setTasks(updateTasks)
+    }
+
     function changeFilter(value: FilterValueType) {
         setFilter(value)
     }
@@ -59,7 +65,7 @@ function App() {
     return (
         <div className="App">
             <Todolist title={"What to learn"} tasks={tasksForTodoList} removeTask={removeTask} addTask={addTask}
-                      changeFilter={changeFilter}/>
+                      changeFilter={changeFilter} checkBox={checkBox}/>
             {/*<Todolist title={"Songs"} tasks={task2}/>*/}
         </div>
     );

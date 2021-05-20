@@ -1,8 +1,30 @@
 .App {
-  padding: 30px;
-  display: flex;
+    padding: 30px;
+    display: flex;
 }
 
 .App > div {
-  margin-right: 50px;
+    margin-right: 50px;
+}
+
+.errorBlock {
+    height: 15px;
+    color: red;
+}
+
+.errorInputFrame {
+    outline: none;
+    border: 2px solid red;
+}
+
+button {
+    margin-left: 5px;
+}
+
+.activeFilter {
+    background-color: yellowgreen;
+}
+
+.activeTask {
+    opacity: 0.5;
 }

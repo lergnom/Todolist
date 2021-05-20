@@ -4,14 +4,24 @@ import {PropsType} from "./App";
 export function Todolist(props: PropsType) {
 
     let [title, setTitle] = useState("")
+    const [error, setError] = useState(false)
+
 
     const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.target.value)
+        title = e.target.value
+        setTitle(title)
+        setError(false)
     }
 
     const addTask = () => {
-        props.addTask(title)
-        setTitle("")
+        const titleCheck = title.trim()
+        if (titleCheck !== "") {
+            props.addTask(titleCheck)
+            setTitle("")
+        } else {
+            setTitle("")
+            setError(true)
+        }
     }
 
     const clickAll = () => {
@@ -30,7 +40,9 @@ export function Todolist(props: PropsType) {
         const changeBox = (e: ChangeEvent<HTMLInputElement>) => {
             props.checkBox(t.id, e.currentTarget.checked)
         }
-        return (<li key={t.id}><input type="checkbox" checked={t.isDone} onChange={changeBox}/> <span>{t.title}</span>
+        return (<li className={t.isDone ? 'activeTask' : ''} key={t.id}><input type="checkbox" checked={t.isDone}
+                                                                               onChange={changeBox}/>
+            <span>{t.title}</span>
             <button onClick={() => {
                 props.removeTask(t.id)
             }}> x
@@ -50,18 +62,21 @@ export function Todolist(props: PropsType) {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input onChange={onChangeHandle} value={title} onKeyPress={onKeyPressHandle}/>
+                <input onChange={onChangeHandle} className={error ? "errorInputFrame" : ""} value={title}
+                       onKeyPress={onKeyPressHandle}/>
                 <button onClick={addTask}>+</button>
+                <div className={"errorBlock"}> {error ? 'Incorrect input' : ''}</div>
             </div>
             <ul>
                 {taskList}
             </ul>
             <div>
-                <button onClick={clickAll}>All
+                <button className={props.filter === 'all' ? "activeFilter" : ""} onClick={clickAll}>All
                 </button>
-                <button onClick={clickActive}>Active
+                <button className={props.filter === 'active' ? "activeFilter" : ""} onClick={clickActive}>Active
                 </button>
-                <button onClick={clickCompleted}>Completed
+                <button className={props.filter === 'completed' ? "activeFilter" : ""}
+                        onClick={clickCompleted}>Completed
                 </button>
             </div>
         </div>

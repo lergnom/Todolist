@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from 'uuid';
+import {AddItemForm} from "./AddItemForm";
 
 type  TaskType = {
     id: string
@@ -94,6 +95,14 @@ function App() {
 
     }
 
+    const addTodoList = (title: string) => {
+        let newTodolist_id = v1()
+        let newTodoList: TodoListPropsType = {id: newTodolist_id, title: title, filter: 'all'}
+        setTodolists([newTodoList, ...todoLists])
+        setTasks({...tasks, [newTodolist_id]: []})
+    }
+
+
     let todoListJsxElement = todoLists.map(tl => {
 
         let tasksForTodoList = tasks[tl.id]
@@ -117,6 +126,7 @@ function App() {
         <
             div
             className="App">
+            <AddItemForm addItem={addTodoList}/>
             {todoListJsxElement}
         </div>
     );

@@ -1,72 +1,49 @@
-import React, {useState, ChangeEvent, KeyboardEvent} from "react";
+import React, {ChangeEvent} from "react";
 import {PropsType} from "./App";
+import {AddItemForm} from "./AddItemForm";
+
 
 export function Todolist(props: PropsType) {
-
-    let [title, setTitle] = useState("")
-    const [error, setError] = useState(false)
-
-
-    const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-        title = e.target.value
-        setTitle(title)
-        setError(false)
-    }
-
-    const addTask = () => {
-        const titleCheck = title.trim()
-        if (titleCheck !== "") {
-            props.addTask(titleCheck)
-            setTitle("")
-        } else {
-            setTitle("")
-            setError(true)
-        }
+    const addTask = (title: string) => {
+        props.addTask(title, props.tlID)
     }
 
     const clickAll = () => {
-        props.changeFilter('all')
+        props.changeFilter('all', props.tlID)
     }
 
     const clickActive = () => {
-        props.changeFilter('active')
+        props.changeFilter('active', props.tlID)
     }
 
     const clickCompleted = () => {
-        props.changeFilter('completed')
+        props.changeFilter('completed', props.tlID)
     }
 
     const taskList = props.tasks.map((t) => {
         const changeBox = (e: ChangeEvent<HTMLInputElement>) => {
-            props.checkBox(t.id, e.currentTarget.checked)
+            props.checkBox(t.id, e.currentTarget.checked, props.tlID)
         }
         return (<li className={t.isDone ? 'activeTask' : ''} key={t.id}><input type="checkbox" checked={t.isDone}
                                                                                onChange={changeBox}/>
             <span>{t.title}</span>
             <button onClick={() => {
-                props.removeTask(t.id)
+                props.removeTask(t.id, props.tlID)
             }}> x
             </button>
         </li>)
     })
 
-    const onKeyPressHandle = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && e.ctrlKey) {
-            addTask()
-            setTitle("")
-        }
-    }
-
 
     return (
         <div>
-            <h3>{props.title}</h3>
-            <div>
-                <input onChange={onChangeHandle} className={error ? "errorInputFrame" : ""} value={title}
-                       onKeyPress={onKeyPressHandle}/>
-                <button onClick={addTask}>+</button>
-                <div className={"errorBlock"}> {error ? 'Incorrect input' : ''}</div>
-            </div>
+            <h3>{props.title}
+                <button onClick={() => {
+                    props.removeList(props.tlID)
+                }}> remove list
+                </button>
+            </h3>
+            <AddItemForm addItem={addTask}/>
             <ul>
                 {taskList}
             </ul>

@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from "react";
 import {PropsType} from "./App";
 import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 
 export function Todolist(props: PropsType) {
@@ -20,13 +21,23 @@ export function Todolist(props: PropsType) {
         props.changeFilter('completed', props.tlID)
     }
 
+
+
+
     const taskList = props.tasks.map((t) => {
         const changeBox = (e: ChangeEvent<HTMLInputElement>) => {
             props.checkBox(t.id, e.currentTarget.checked, props.tlID)
         }
+
+        const onChangeTitleHandler = (newValue: string) => {
+            props.onChangeTitle(t.id, newValue, props.tlID)
+
+        }
+
         return (<li className={t.isDone ? 'activeTask' : ''} key={t.id}><input type="checkbox" checked={t.isDone}
                                                                                onChange={changeBox}/>
-            <span>{t.title}</span>
+            {/*<span>{t.title}</span>*/}
+            <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
             <button onClick={() => {
                 props.removeTask(t.id, props.tlID)
             }}> x

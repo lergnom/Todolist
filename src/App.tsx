@@ -22,6 +22,7 @@ export type PropsType = {
     filter: FilterValueType
     tlID: string
     removeList: (tlID: string) => void
+    onChangeTitle: (id: string, newTitle: string, tlID: string) => void
 }
 
 type TodoListPropsType = {
@@ -102,6 +103,21 @@ function App() {
         setTasks({...tasks, [newTodolist_id]: []})
     }
 
+    const onChangeTitle = (id: string, title: string, tlID: string) => {
+        let todoListsTasks = tasks[tlID];
+        let task = todoListsTasks.find(t => t.id === id)
+        if (task) {
+            if (title !== '')
+                task.title = title
+            setTasks({...tasks})
+        }
+        // let todoList = todoLists.find(tl => tl.id === tlID)
+        // if (todoList) {
+        //     [...tasks[tlID]].map(t => t.id === id ? t.title = title : '')
+        //     setTasks({...tasks})
+        // }
+    }
+
 
     let todoListJsxElement = todoLists.map(tl => {
 
@@ -116,7 +132,8 @@ function App() {
         return (
             <Todolist key={tl.id} tlID={tl.id} title={tl.title} tasks={tasksForTodoList} removeTask={removeTask}
                       addTask={addTask}
-                      changeFilter={changeFilter} checkBox={checkBox} filter={tl.filter} removeList={removeList}/>
+                      changeFilter={changeFilter} checkBox={checkBox} filter={tl.filter} removeList={removeList}
+                      onChangeTitle={onChangeTitle}/>
         )
 
 
@@ -126,8 +143,12 @@ function App() {
         <
             div
             className="App">
-            <AddItemForm addItem={addTodoList}/>
-            {todoListJsxElement}
+            < AddItemForm
+                addItem={addTodoList}
+            />
+            {
+                todoListJsxElement
+            }
         </div>
     );
 }

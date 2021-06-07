@@ -23,6 +23,7 @@ export type PropsType = {
     tlID: string
     removeList: (tlID: string) => void
     onChangeTitle: (id: string, newTitle: string, tlID: string) => void
+    onChangeTodoListTitle: (newTitle: string, tlID: string) => void
 }
 
 type TodoListPropsType = {
@@ -118,6 +119,13 @@ function App() {
         // }
     }
 
+    const onChangeTodoListTitle = (newTitle: string, tlID: string) => {
+        let todoList = todoLists.find(tl => tl.id === tlID)
+        if (todoList) {
+            todoList.title = newTitle
+            setTodolists([...todoLists])
+        }
+    }
 
     let todoListJsxElement = todoLists.map(tl => {
 
@@ -133,7 +141,7 @@ function App() {
             <Todolist key={tl.id} tlID={tl.id} title={tl.title} tasks={tasksForTodoList} removeTask={removeTask}
                       addTask={addTask}
                       changeFilter={changeFilter} checkBox={checkBox} filter={tl.filter} removeList={removeList}
-                      onChangeTitle={onChangeTitle}/>
+                      onChangeTitle={onChangeTitle} onChangeTodoListTitle={onChangeTodoListTitle}/>
         )
 
 

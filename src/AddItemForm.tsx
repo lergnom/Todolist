@@ -1,4 +1,6 @@
+import Button from "@material-ui/core/Button";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {TextField} from "@material-ui/core";
 
 type AddItemFormTypeProps = {
     addItem: (title: string) => void
@@ -35,9 +37,12 @@ export function AddItemForm(props: AddItemFormTypeProps) {
 
     return (
         <div>
-            <input onChange={onChangeHandle} className={error ? "errorInputFrame" : ""} value={title}
-                   onKeyPress={onKeyPressHandle}/>
-            <button onClick={addItem}>+</button>
+            <TextField variant={"outlined"}
+                       onChange={onChangeHandle}
+                       className={error ? "errorInputFrame" : ""}
+                       value={title}
+                       onKeyPress={onKeyPressHandle}/>
+            <Button variant={"contained"} color={"primary"} onClick={addItem}>+</Button>
             <div className={"errorBlock"}> {error ? 'Incorrect input' : ''}</div>
         </div>
 

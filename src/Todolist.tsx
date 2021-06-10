@@ -2,6 +2,8 @@ import React, {ChangeEvent} from "react";
 import {PropsType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Checkbox, IconButton} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 
 export function Todolist(props: PropsType) {
@@ -31,14 +33,16 @@ export function Todolist(props: PropsType) {
 
         }
 
-        return (<li className={t.isDone ? 'activeTask' : ''} key={t.id}><input type="checkbox" checked={t.isDone}
-                                                                               onChange={changeBox}/>
+        return (<div className={t.isDone ? 'activeTask' : ''} key={t.id}><Checkbox color={"primary"}
+                                                                                   checked={t.isDone}
+                                                                                   onChange={changeBox}/>
             <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
-            <button onClick={() => {
+            <IconButton onClick={() => {
                 props.removeTask(t.id, props.tlID)
-            }}> x
-            </button>
-        </li>)
+            }}>
+                <Delete/>
+            </IconButton>
+        </div>)
     })
 
 
@@ -48,11 +52,12 @@ export function Todolist(props: PropsType) {
 
     return (
         <div>
-            <h3><EditableSpan title={props.title} onChange={onChangeTitleTodoList }/>
-                <button onClick={() => {
+            <h3><EditableSpan title={props.title} onChange={onChangeTitleTodoList}/>
+                <IconButton onClick={() => {
                     props.removeList(props.tlID)
-                }}> remove list
-                </button>
+                }}>
+                    <Delete/>
+                </IconButton>
             </h3>
             <AddItemForm addItem={addTask}/>
             <ul>

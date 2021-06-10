@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import {PropsType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Checkbox, IconButton} from "@material-ui/core";
+import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 
 
@@ -60,17 +60,20 @@ export function Todolist(props: PropsType) {
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTask}/>
-            <ul>
-                {taskList}
-            </ul>
             <div>
-                <button className={props.filter === 'all' ? "activeFilter" : ""} onClick={clickAll}>All
-                </button>
-                <button className={props.filter === 'active' ? "activeFilter" : ""} onClick={clickActive}>Active
-                </button>
-                <button className={props.filter === 'completed' ? "activeFilter" : ""}
+                {taskList}
+            </div>
+            <div>
+                <Button variant={"outlined"} color={props.filter === 'all' ? "primary" : "default"}
+                        onClick={clickAll}>All
+                </Button>
+                <Button style={{margin: "0 3px"}} variant={"outlined"}
+                        color={props.filter === 'active' ? "primary" : "default"}
+                        onClick={clickActive}>Active
+                </Button>
+                <Button variant={"outlined"} color={props.filter === 'completed' ? "primary" : "default"}
                         onClick={clickCompleted}>Completed
-                </button>
+                </Button>
             </div>
         </div>
 

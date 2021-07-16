@@ -11,7 +11,7 @@ type  TaskType = {
     title: string
     isDone: boolean
 }
-type FilterValueType = "all" | "completed" | "active"
+export type FilterValueType = "all" | "completed" | "active"
 
 
 export type PropsType = {

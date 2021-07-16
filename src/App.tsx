@@ -28,7 +28,7 @@ export type PropsType = {
     onChangeTodoListTitle: (newTitle: string, tlID: string) => void
 }
 
-type TodoListPropsType = {
+export type TodoListPropsType = {
     id: string
     title: string
     filter: FilterValueType
@@ -47,7 +47,7 @@ function App() {
         {id: todoListId_1, title: "What to learn", filter: 'all'},
         {id: todoListId_2, title: "What to buy", filter: 'active'}
     ])
-    
+
     let [tasks, setTasks] = useState<TodoListTaskTypeProps>({
         [todoListId_1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},

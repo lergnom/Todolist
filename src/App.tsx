@@ -47,7 +47,7 @@ function App() {
         {id: todoListId_1, title: "What to learn", filter: 'all'},
         {id: todoListId_2, title: "What to buy", filter: 'active'}
     ])
-
+    
     let [tasks, setTasks] = useState<TodoListTaskTypeProps>({
         [todoListId_1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
@@ -114,11 +114,7 @@ function App() {
                 task.title = title
             setTasks({...tasks})
         }
-        // let todoList = todoLists.find(tl => tl.id === tlID)
-        // if (todoList) {
-        //     [...tasks[tlID]].map(t => t.id === id ? t.title = title : '')
-        //     setTasks({...tasks})
-        // }
+
     }
 
     const onChangeTodoListTitle = (newTitle: string, tlID: string) => {

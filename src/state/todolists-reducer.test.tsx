@@ -51,12 +51,6 @@ test('correct todolist should change its name', () => {
         {id: todolistId2, title: 'What to bu', filter: 'all'},
     ]
 
-    // const action = {
-    //     type: 'CHANGE-TODOLIST-TITLE' as const,
-    //     id: todolistId2,
-    //     title: newTodolistTitle,
-    // }
-
     const endState = todolistReducer(startState, changeTodolistTitleAC(todolistId2,newTodolistTitle))
 
     expect(endState[0].title).toBe('What to learn')
@@ -74,12 +68,6 @@ test('test change todolist filter', () => {
         {id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'},
     ]
-
-    // const action = {
-    //     type: 'CHANGE-TODOLIST-FILTER' as const,
-    //     id: todolistId2,
-    //     filter: newFilter
-    // }
 
     const endState = todolistReducer(startState, changeTodolistFilterAC(todolistId2,newFilter))
     expect(endState[0].filter).toBe('all')

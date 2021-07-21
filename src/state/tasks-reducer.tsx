@@ -1,7 +1,7 @@
 import {TodoListTaskTypeProps} from "../App";
 import {v1} from "uuid";
 
-type ActionType = RemoveTaskActionType | AddTaskActionType
+type ActionType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType
 
 type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -13,6 +13,13 @@ type AddTaskActionType = {
     type: 'ADD-TASK'
     todolistId: string
     title: string
+}
+
+type ChangeTaskStatusActionType = {
+    type: 'CHANGE-TASK-STATUS'
+    todolistId: string
+    taskId: string
+    isDone: boolean
 }
 
 export const tasksReducer = (state: TodoListTaskTypeProps, action: ActionType) => {
@@ -27,6 +34,14 @@ export const tasksReducer = (state: TodoListTaskTypeProps, action: ActionType) =
             let newTask = {id: v1(), title: action.title, isDone: false}
             return {...state, [action.todolistId]: [newTask, ...state[action.todolistId]]}
         }
+        case 'CHANGE-TASK-STATUS': {
+            return {...state,
+                [action.todolistId]: state[action.todolistId].map(task => task.id === action.taskId ? {
+                    ...task,
+                    isDone: action.isDone
+                } : task)
+            }
+        }
         default:
             throw new Error("I not understand action type")
     }
@@ -40,4 +55,8 @@ export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActi
 
 export const addTaskAC = (title: string, todolistId: string): AddTaskActionType => {
     return {type: 'ADD-TASK', title, todolistId}
+}
+
+export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string): ChangeTaskStatusActionType => {
+    return {type: 'CHANGE-TASK-STATUS', taskId, todolistId, isDone}
 }

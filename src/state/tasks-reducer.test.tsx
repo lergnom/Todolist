@@ -1,6 +1,6 @@
-import {TodoListTaskTypeProps} from "../App";
+import {TodoListPropsType, TodoListTaskTypeProps} from "../App";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
-import {addedTodolistAC} from "./todolists-reducer";
+import {addedTodolistAC, todolistReducer} from "./todolists-reducer";
 
 test('correct task should be deleted from correct array', () => {
     const startState: TodoListTaskTypeProps = {
@@ -133,4 +133,22 @@ test('new array should be added when new todolist is added', () => {
 
     expect(keys.length).toBe(3);
     expect(endState[newKey]).toEqual([]);
+});
+
+
+test('ids should be equals', () => {
+    const startTasksState: TodoListTaskTypeProps  = {};
+    const startTodolistsState: Array<TodoListPropsType> = [];
+
+    const action = addedTodolistAC("new todolist");
+
+    const endTasksState = tasksReducer(startTasksState, action)
+    const endTodolistsState = todolistReducer(startTodolistsState, action)
+
+    const keys = Object.keys(endTasksState);
+    const idFromTasks = keys[0];
+    const idFromTodolists = endTodolistsState[0].id;
+
+    expect(idFromTasks).toBe(action.todolistId);
+    expect(idFromTodolists).toBe(action.todolistId);
 });

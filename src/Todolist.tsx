@@ -25,8 +25,16 @@ export const Todolist = React.memo(function (props: PropsType) {
     const clickCompleted = () => {
         props.changeFilter('completed', props.tlID)
     }
+    let tasksForTodoList= props.tasks
+    if (props.filter === 'active') {
+        tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
+    }
+    if (props.filter === 'completed') {
+        tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
+    }
 
-    const taskList = props.tasks.map((t) => {
+
+    const taskList = tasksForTodoList.map((t) => {
         const changeBox = (e: ChangeEvent<HTMLInputElement>) => {
             props.checkBox(t.id, e.currentTarget.checked, props.tlID)
         }
@@ -52,6 +60,7 @@ export const Todolist = React.memo(function (props: PropsType) {
     const onChangeTitleTodoList = (newTitle: string) => {
         props.onChangeTodoListTitle(newTitle, props.tlID)
     }
+
 
     return (
         <div>

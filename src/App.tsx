@@ -127,18 +127,10 @@ function App() {
 
     let todoListJsxElement = todoLists.map(tl => {
 
-        let tasksForTodoList = tasks[tl.id]
-        if (tl.filter === 'active') {
-            tasksForTodoList = tasks[tl.id].filter(t => !t.isDone)
-        }
-        if (tl.filter === 'completed') {
-            tasksForTodoList = tasks[tl.id].filter(t => t.isDone)
-        }
-
         return (
             <Grid item>
                 <Paper style={{padding: "10px"}}>
-                    <Todolist key={tl.id} tlID={tl.id} title={tl.title} tasks={tasksForTodoList} removeTask={removeTask}
+                    <Todolist key={tl.id} tlID={tl.id} title={tl.title} tasks={tasks[tl.id]} removeTask={removeTask}
                               addTask={addTask}
                               changeFilter={changeFilter} checkBox={checkBox} filter={tl.filter} removeList={removeList}
                               onChangeTitle={onChangeTitle} onChangeTodoListTitle={onChangeTodoListTitle}/>

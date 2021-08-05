@@ -4,15 +4,13 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {Task} from "./Task";
 
 
 export const Todolist = React.memo(function (props: PropsType) {
-    console.log("Todolist")
-
-
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.tlID)
-    }, [])
+    }, [props])
 
     const clickAll = () => {
         props.changeFilter('all', props.tlID)
@@ -25,7 +23,7 @@ export const Todolist = React.memo(function (props: PropsType) {
     const clickCompleted = () => {
         props.changeFilter('completed', props.tlID)
     }
-    let tasksForTodoList= props.tasks
+    let tasksForTodoList = props.tasks
     if (props.filter === 'active') {
         tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
     }
@@ -33,34 +31,15 @@ export const Todolist = React.memo(function (props: PropsType) {
         tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
     }
 
-
     const taskList = tasksForTodoList.map((t) => {
-        const changeBox = (e: ChangeEvent<HTMLInputElement>) => {
-            props.checkBox(t.id, e.currentTarget.checked, props.tlID)
-        }
-
-        const onChangeTitleHandler = (newValue: string) => {
-            props.onChangeTitle(t.id, newValue, props.tlID)
-
-        }
-
-        return (<div className={t.isDone ? 'activeTask' : ''} key={t.id}><Checkbox color={"primary"}
-                                                                                   checked={t.isDone}
-                                                                                   onChange={changeBox}/>
-            <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
-            <IconButton onClick={() => {
-                props.removeTask(t.id, props.tlID)
-            }}>
-                <Delete/>
-            </IconButton>
-        </div>)
+        return <Task key={t.id} tlID={props.tlID} task={t} checkBox={props.checkBox} onChangeTitle={props.onChangeTitle}
+                     removeTask={props.removeTask}/>
     })
 
 
     const onChangeTitleTodoList = (newTitle: string) => {
         props.onChangeTodoListTitle(newTitle, props.tlID)
     }
-
 
     return (
         <div>

@@ -1,8 +1,8 @@
-import React, {ChangeEvent, useCallback} from "react";
+import React, { useCallback} from "react";
 import {PropsType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
 
@@ -12,17 +12,18 @@ export const Todolist = React.memo(function (props: PropsType) {
         props.addTask(title, props.tlID)
     }, [props])
 
-    const clickAll = () => {
+    const clickAll = useCallback(() => {
         props.changeFilter('all', props.tlID)
-    }
+    }, [props])
 
-    const clickActive = () => {
+    const clickActive = useCallback(() => {
         props.changeFilter('active', props.tlID)
-    }
+    }, [props])
 
-    const clickCompleted = () => {
+    const clickCompleted = useCallback(() => {
         props.changeFilter('completed', props.tlID)
-    }
+    }, [props])
+
     let tasksForTodoList = props.tasks
     if (props.filter === 'active') {
         tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
@@ -37,9 +38,9 @@ export const Todolist = React.memo(function (props: PropsType) {
     })
 
 
-    const onChangeTitleTodoList = (newTitle: string) => {
+    const onChangeTitleTodoList = useCallback((newTitle: string) => {
         props.onChangeTodoListTitle(newTitle, props.tlID)
-    }
+    }, [props])
 
     return (
         <div>

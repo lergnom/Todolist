@@ -7,50 +7,53 @@ type AddItemFormTypeProps = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: AddItemFormTypeProps) {
-    let [title, setTitle] = useState("")
-    const [error, setError] = useState(false)
+export const AddItemForm = React.memo(function(props: AddItemFormTypeProps)  {
 
-    const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-        title = e.target.value
-        setTitle(title)
-        setError(false)
-    }
+        console.log("Add item Form")
+        let [title, setTitle] = useState("")
+        const [error, setError] = useState<boolean | string>(false)
 
-    const addItem = () => {
-        const titleCheck = title.trim()
-        if (titleCheck !== "") {
-            props.addItem(titleCheck)
-            setTitle("")
-        } else {
-            setTitle("")
-            setError(true)
+        const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
+            title = e.target.value
+            setTitle(title)
+            setError(false)
         }
-    }
 
-
-    const onKeyPressHandle = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && e.ctrlKey) {
-            addItem()
-            setTitle("")
+        const addItem = () => {
+            const titleCheck = title.trim()
+            if (titleCheck !== "") {
+                props.addItem(titleCheck)
+                setTitle("")
+            } else {
+                setTitle("")
+                setError(true)
+            }
         }
+
+
+        const onKeyPressHandle = (e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter" && e.ctrlKey) {
+                addItem()
+                setTitle("")
+            }
+        }
+
+        return (
+            <div>
+                <TextField variant={"outlined"}
+                           onChange={onChangeHandle}
+                           error={!!error}
+                           label={"Название"}
+                           helperText={error}
+                           value={title}
+                           onKeyPress={onKeyPressHandle}/>
+                <IconButton color={"primary"} onClick={addItem}>
+                    <AddBox/>
+                </IconButton>
+                <div className={"errorBlock"}> {error ? 'Incorrect input' : ''}</div>
+            </div>
+
+        )
+
     }
-
-    return (
-        <div>
-            <TextField variant={"outlined"}
-                       onChange={onChangeHandle}
-                       error={!!error}
-                       label={"Название"}
-                       helperText={error}
-                       value={title}
-                       onKeyPress={onKeyPressHandle}/>
-            <IconButton color={"primary"} onClick={addItem}>
-                <AddBox/>
-            </IconButton>
-            <div className={"errorBlock"}> {error ? 'Incorrect input' : ''}</div>
-        </div>
-
-    )
-
-}
+)

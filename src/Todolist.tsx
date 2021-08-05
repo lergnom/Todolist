@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {PropsType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -6,10 +6,13 @@ import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 
 
-export function Todolist(props: PropsType) {
-    const addTask = (title: string) => {
+export const Todolist = React.memo(function (props: PropsType) {
+    console.log("Todolist")
+
+
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.tlID)
-    }
+    }, [])
 
     const clickAll = () => {
         props.changeFilter('all', props.tlID)
@@ -78,4 +81,4 @@ export function Todolist(props: PropsType) {
         </div>
 
     )
-}
+})

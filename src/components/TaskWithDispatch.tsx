@@ -2,11 +2,11 @@ import React, {ChangeEvent} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {TaskType} from "./App";
+import {TaskType} from "../App";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
-import {TodoListPropsType} from "./AppWithRedux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {AppRootStateType} from "../state/store";
+import {TodoListPropsType} from "../AppWithRedux";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 
 type TaskPropsType = {
     tlID: string

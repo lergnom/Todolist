@@ -1,5 +1,5 @@
 import React, { useCallback} from "react";
-import {PropsType} from "./App";
+import {PropsType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";

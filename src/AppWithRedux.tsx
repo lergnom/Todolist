@@ -12,7 +12,7 @@ import {
     fetchTodolists,
     TodolistDomainType,
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TasksStateType} from "./App";
@@ -66,8 +66,10 @@ function AppWithRedux() {
     }, [dispatch])
 
     const addTask = useCallback((title: string, tlID: string) => {
-        dispatch(addTaskAC(title, tlID))
+        // dispatch(addTaskAC(title, tlID))
+        dispatch(addTaskTC(tlID, title));
     }, [dispatch])
+
 
     const checkBox = useCallback((id: string, isDone: boolean, tlID: string) => {
         dispatch(changeTaskStatusAC(id, isDone, tlID))

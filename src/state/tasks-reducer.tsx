@@ -111,3 +111,10 @@ export const fetchTasks = (todolistId: string) => (dispatch: Dispatch) => {
             dispatch(setTasksAC(res.data.items, todolistId));
         })
 }
+
+export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    TasksAPI.createTask(todolistId, title)
+        .then(res => {
+            res.data.resultCode === 0 && dispatch(addTaskAC(title, todolistId));
+        })
+}

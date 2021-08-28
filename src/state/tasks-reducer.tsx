@@ -1,8 +1,8 @@
-import {TodoListTaskTypeProps} from "../App";
+import {TasksStateType, TodoListTaskTypeProps} from "../App";
 import {v1} from "uuid";
 import {AddTodolist, RemoveTodolist, SetTodolistsType} from "./todolists-reducer";
 import {Dispatch} from "redux";
-import {TaskItemType, TasksAPI} from "../api/todolist-api";
+import {TasksAPI} from "../api/todolist-api";
 
 type ActionType =
     RemoveTaskActionType
@@ -16,7 +16,7 @@ type ActionType =
 
 const initialState: TodoListTaskTypeProps = {}
 
-export const tasksReducer = (state: TodoListTaskTypeProps = initialState, action: ActionType) => {
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionType): TasksStateType => {
     switch (action.type) {
         case "SET_TASKS": {
             const copyState = {...state};
@@ -59,7 +59,7 @@ export const tasksReducer = (state: TodoListTaskTypeProps = initialState, action
 
         }
         case 'ADD-TODOLIST': {
-            return {...state, [action.todolistId]: []}
+            return {...state, [action.todolist.id]: []}
         }
         case 'REMOVE-TODOLIST-ID': {
             let stateCopy = {...state}

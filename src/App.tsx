@@ -13,6 +13,10 @@ export type  TaskType = {
 }
 export type FilterValueType = "all" | "completed" | "active"
 
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+
 
 export type PropsType = {
     title: string

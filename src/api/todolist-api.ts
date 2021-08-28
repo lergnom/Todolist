@@ -8,6 +8,13 @@ const instance = axios.create({
     }
 });
 
+export type TodolistType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+}
+
 export type TodoType = {
     id: string,
     addedDate: string,
@@ -22,12 +29,18 @@ type CommonResponseType<T = {}> = {
     data: T
 }
 
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    data: D
+}
+
 export const TodolistAPI = {
     getTodolists() {
         return instance.get<Array<TodoType>>(`todo-lists/`)
     },
     createTodolist(title: string) {
-        return instance.post<CommonResponseType>('todo-lists/', {title});
+        return instance.post<ResponseType<TodoType>>('todo-lists/', {title});
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`);
@@ -53,14 +66,12 @@ export type TaskItemType = {
 }
 
 
-
-
 export type GetTasksType = {
     error: null | string
     // items: {
     //     [key: string]: Array<TaskItemType>
     // }
-    items:TaskItemType[]
+    items: TaskItemType[]
     totalCount: number
 }
 

@@ -5,15 +5,17 @@ import {AddItemForm} from "./components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
-    addedTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitle,
+    createTodolist,
+    deleteTodolist,
     fetchTodolists,
-    removeTodolistAC,
+    TodolistDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import {TasksStateType} from "./App";
 
 export type  TaskType = {
     id: string
@@ -51,8 +53,8 @@ function AppWithRedux() {
     console.log("AppWithReduX")
 
 
-    let todoLists = useSelector<AppRootStateType, Array<TodoListPropsType>>(state => state.todolists)
-    let tasks = useSelector<AppRootStateType, TodoListTaskTypeProps>(state => state.tasks)
+    let todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
+    let tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -76,13 +78,11 @@ function AppWithRedux() {
     }, [dispatch])
 
     const removeList = useCallback((tlID: string) => {
-        dispatch(removeTodolistAC(tlID))
-        delete tasks[tlID]
+        dispatch(deleteTodolist(tlID));
     }, [dispatch, tasks])
 
     const addTodoList = useCallback((title: string) => {
-        const action = addedTodolistAC(title)
-        dispatch(action)
+        dispatch(createTodolist(title));
     }, [dispatch])
 
     const onChangeTitle = useCallback((id: string, title: string, tlID: string) => {
@@ -90,7 +90,8 @@ function AppWithRedux() {
     }, [dispatch])
 
     const onChangeTodoListTitle = useCallback((newTitle: string, tlID: string) => {
-        dispatch(changeTodolistTitleAC(tlID, newTitle))
+        // dispatch(changeTodolistTitleAC(tlID, newTitle))
+        dispatch(changeTodolistTitle(tlID, newTitle));
     }, [dispatch])
 
     let todoListJsxElement = todoLists.map(tl => {

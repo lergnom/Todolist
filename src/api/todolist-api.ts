@@ -39,7 +39,7 @@ export const TodolistAPI = {
 };
 
 
-type TaskItemType = {
+export type TaskItemType = {
     addedDate: string,
     deadline: null | string,
     description: null | string,
@@ -52,11 +52,15 @@ type TaskItemType = {
     todoListId: string,
 }
 
-type GetTasksType = {
+
+
+
+export type GetTasksType = {
     error: null | string
-    items: {
-        [key: string]: Array<TaskItemType>
-    }
+    // items: {
+    //     [key: string]: Array<TaskItemType>
+    // }
+    items:TaskItemType[]
     totalCount: number
 }
 

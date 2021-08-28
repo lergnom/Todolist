@@ -3,12 +3,14 @@ import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {TodolistAPI, TodoType} from "../api/todolist-api";
 
-type ActionType = RemoveTodolist | AddTodolist | ChangeTodolistTitle | ChangeTodolistFilter
+type ActionType = RemoveTodolist | AddTodolist | ChangeTodolistTitle | ChangeTodolistFilter | SetTodolistsType
 
 const initialState: Array<TodoListPropsType> = []
 
 export const todolistReducer = (state: Array<TodoListPropsType> = initialState, action: ActionType): Array<TodoListPropsType> => {
     switch (action.type) {
+        case "SET_TODOLISTS":
+            return action.todolists.map(tl => ({...tl, filter: 'all'}));
         case 'REMOVE-TODOLIST-ID':
             return [...state].filter(tl => tl.id !== action.id)
         case 'ADD-TODOLIST':
@@ -45,7 +47,7 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValueType) => (
     id
 }) as const;
 
-type SetTodolistsType = ReturnType<typeof setTodolists>;
+export type SetTodolistsType = ReturnType<typeof setTodolists>;
 export const setTodolists = (todolists: Array<TodoType>) => ({type: 'SET_TODOLISTS', todolists}) as const;
 
 

@@ -1,6 +1,6 @@
 import {TodoListTaskTypeProps} from "../App";
 import {v1} from "uuid";
-import {AddTodolist, RemoveTodolist} from "./todolists-reducer";
+import {AddTodolist, RemoveTodolist, SetTodolistsType} from "./todolists-reducer";
 
 type ActionType =
     RemoveTaskActionType
@@ -9,6 +9,7 @@ type ActionType =
     | ChangeTaskTitleActionType
     | AddTodolist
     | RemoveTodolist
+    | SetTodolistsType
 
 const initialState: TodoListTaskTypeProps = {}
 

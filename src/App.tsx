@@ -64,6 +64,8 @@ function App() {
         ]
     })
 
+
+
     function removeTask(id: string, tlID: string) {
         let filteredtasks = tasks[tlID]
         tasks[tlID] = filteredtasks.filter(t => t.id !== id)

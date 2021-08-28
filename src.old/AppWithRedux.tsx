@@ -15,7 +15,6 @@ import {
 import {addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {TasksStateType} from "./App";
 
 export type  TaskType = {
     id: string
@@ -45,9 +44,10 @@ export type TodoListPropsType = {
     filter: FilterValueType
 }
 
-export type TodoListTaskTypeProps = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
+
 
 function AppWithRedux() {
     console.log("AppWithReduX")

@@ -1,6 +1,6 @@
-import {FilterValueType} from "../App";
 import {Dispatch} from "redux";
 import {TodolistAPI, TodolistType, TodoType} from "../api/todolist-api";
+import {FilterValueType} from "../AppWithRedux";
 
 export type FilterValuesType = "all" | "active" | "completed";
 

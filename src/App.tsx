@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react'
 import './App.css';
-import {Todolist} from './Todolist';
-import {AddItemForm} from './AddItemForm';
+import {Todolist} from './components/Todolist/Todolist';
+import {AddItemForm} from './components/AddItemForm/AddItemForm';
 import {
     AppBar,
     Button,

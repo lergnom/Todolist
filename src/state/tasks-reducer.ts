@@ -145,6 +145,10 @@ export const fetchTasks = (todolistId: string) => {
                 dispatch(setAppStatusAC('succeeded'));
 
             })
+            .catch(error => {
+                dispatch(setAppErrorAC(error.message));
+                dispatch(setAppStatusAC('failed'));
+            });
     }
 }
 
@@ -159,6 +163,10 @@ export const removeTaskTC = (todolistId: string, taskId: string) => {
 
                 }
             })
+            .catch(error => {
+                dispatch(setAppErrorAC(error.message));
+                dispatch(setAppStatusAC('failed'));
+            });
     }
 }
 
@@ -180,6 +188,10 @@ export const createTaskTC = (todolistId: string, taskTitle: string) => {
 
                 }
             })
+            .catch(error => {
+                dispatch(setAppErrorAC(error.message));
+                dispatch(setAppStatusAC('failed'));
+            });
     }
 }
 
@@ -201,6 +213,10 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
                     dispatch(setAppStatusAC('succeeded'));
 
                 }
+            })
+            .catch(error => {
+                dispatch(setAppErrorAC(error.message));
+                dispatch(setAppStatusAC('failed'));
             });
     }
 }
@@ -225,6 +241,10 @@ export const updateTaskTitileTC = (todolistId: string, taskId: string, title: st
 
                 }
             })
+            .catch(error => {
+                dispatch(setAppErrorAC(error.message));
+                dispatch(setAppStatusAC('failed'));
+            });
 
     }
 

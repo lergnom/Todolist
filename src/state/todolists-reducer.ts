@@ -109,6 +109,10 @@ export const fetchTodolists = () => {
                 dispatch(setTodolist(res.data));
                 dispatch(setAppStatusAC('succeeded'));
             })
+            .catch(error => {
+                dispatch(setAppErrorAC(error.message));
+                dispatch(setAppStatusAC('failed'));
+            });
     }
 }
 export const removeTodolistTC = (id: string) => (dispatch: Dispatch) => {
@@ -119,9 +123,21 @@ export const removeTodolistTC = (id: string) => (dispatch: Dispatch) => {
             if (res.data.resultCode === 0) {
                 dispatch(removeTodolistAC(id));
                 dispatch(setAppStatusAC('succeeded'));
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setAppErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setAppErrorAC('Some error occurred'))
+                }
+                dispatch(setAppStatusAC('failed'))
+
             }
 
         })
+        .catch(error => {
+            dispatch(setAppErrorAC(error.message));
+            dispatch(setAppStatusAC('failed'));
+        });
 }
 
 export const createTodolistTC = (title: string) => (dispatch: Dispatch) => {
@@ -141,6 +157,10 @@ export const createTodolistTC = (title: string) => (dispatch: Dispatch) => {
 
             }
         })
+        .catch(error => {
+            dispatch(setAppErrorAC(error.message));
+            dispatch(setAppStatusAC('failed'));
+        });
 }
 
 export const changeTodolistTitleTC = (id: string, title: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
@@ -152,8 +172,19 @@ export const changeTodolistTitleTC = (id: string, title: string) => (dispatch: D
                 dispatch(changeTodolistTitleAC(id, title))
                 dispatch(setAppStatusAC('succeeded'));
 
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setAppErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setAppErrorAC('Some error occurred'))
+                }
+                dispatch(setAppStatusAC('failed'))
             }
         })
+        .catch(error => {
+            dispatch(setAppErrorAC(error.message));
+            dispatch(setAppStatusAC('failed'));
+        });
 }
 
 

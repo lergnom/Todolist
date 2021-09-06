@@ -1,7 +1,8 @@
 import {Dispatch} from 'redux';
 import {todolistsAPI, TodolistType} from '../api/todolists-api'
 import {AppRootStateType} from "./store";
-import {RequestStatusType, setAppErrorAC, setAppStatusAC} from "./app-reducer";
+import {RequestStatusType, setAppStatusAC} from "./app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -110,8 +111,7 @@ export const fetchTodolists = () => {
                 dispatch(setAppStatusAC('succeeded'));
             })
             .catch(error => {
-                dispatch(setAppErrorAC(error.message));
-                dispatch(setAppStatusAC('failed'));
+                handleServerNetworkError(error, dispatch);
             });
     }
 }
@@ -124,19 +124,12 @@ export const removeTodolistTC = (id: string) => (dispatch: Dispatch) => {
                 dispatch(removeTodolistAC(id));
                 dispatch(setAppStatusAC('succeeded'));
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
-                }
-                dispatch(setAppStatusAC('failed'))
-
+                handleServerAppError(res.data, dispatch);
             }
 
         })
         .catch(error => {
-            dispatch(setAppErrorAC(error.message));
-            dispatch(setAppStatusAC('failed'));
+            handleServerNetworkError(error, dispatch);
         });
 }
 
@@ -148,18 +141,11 @@ export const createTodolistTC = (title: string) => (dispatch: Dispatch) => {
                 dispatch(addTodolistAC(res.data.data.item));
                 dispatch(setAppStatusAC('succeeded'));
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
-                }
-                dispatch(setAppStatusAC('failed'))
-
+                handleServerAppError(res.data, dispatch);
             }
         })
         .catch(error => {
-            dispatch(setAppErrorAC(error.message));
-            dispatch(setAppStatusAC('failed'));
+            handleServerNetworkError(error, dispatch);
         });
 }
 
@@ -173,17 +159,13 @@ export const changeTodolistTitleTC = (id: string, title: string) => (dispatch: D
                 dispatch(setAppStatusAC('succeeded'));
 
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred'))
-                }
-                dispatch(setAppStatusAC('failed'))
+                handleServerAppError(res.data, dispatch);
+
             }
         })
         .catch(error => {
-            dispatch(setAppErrorAC(error.message));
-            dispatch(setAppStatusAC('failed'));
+            handleServerNetworkError(error, dispatch);
+
         });
 }
 

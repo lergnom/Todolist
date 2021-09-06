@@ -3,7 +3,8 @@ import {AddTodolistActionType, RemoveTodolistActionType, SetTodoListType} from '
 import {TaskStatuses, TaskType, todolistsAPI} from '../api/todolists-api'
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
-import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
+import {setAppStatusAC} from "./app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -141,13 +142,19 @@ export const fetchTasks = (todolistId: string) => {
         dispatch(setAppStatusAC('loading'));
         todolistsAPI.getTasks(todolistId)
             .then(res => {
-                dispatch(setTasks(todolistId, res.data.items));
-                dispatch(setAppStatusAC('succeeded'));
+                if (res.data.error === null) {
+                    dispatch(setTasks(todolistId, res.data.items));
+                    dispatch(setAppStatusAC('succeeded'));
+                } else {
+                    handleServerAppError({
+                        resultCode: 1,
+                        messages: [res.data.error], data: {}
+                    }, dispatch);
 
+                }
             })
             .catch(error => {
-                dispatch(setAppErrorAC(error.message));
-                dispatch(setAppStatusAC('failed'));
+                handleServerNetworkError(error, dispatch);
             });
     }
 }
@@ -161,11 +168,14 @@ export const removeTaskTC = (todolistId: string, taskId: string) => {
                     dispatch(removeTaskAC(taskId, todolistId));
                     dispatch(setAppStatusAC('succeeded'));
 
+                } else {
+                    handleServerAppError(res.data, dispatch);
+
                 }
             })
             .catch(error => {
-                dispatch(setAppErrorAC(error.message));
-                dispatch(setAppStatusAC('failed'));
+                handleServerNetworkError(error, dispatch);
+
             });
     }
 }
@@ -179,18 +189,11 @@ export const createTaskTC = (todolistId: string, taskTitle: string) => {
                     dispatch(addTaskAC(res.data.data.item))
                     dispatch(setAppStatusAC('succeeded'));
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setAppErrorAC('Some error occurred'))
-                    }
-                    dispatch(setAppStatusAC('failed'))
-
+                    handleServerAppError(res.data, dispatch);
                 }
             })
             .catch(error => {
-                dispatch(setAppErrorAC(error.message));
-                dispatch(setAppStatusAC('failed'));
+                handleServerNetworkError(error, dispatch);
             });
     }
 }
@@ -212,11 +215,12 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
                     dispatch(changeTaskStatusAC(taskId, status, todolistId));
                     dispatch(setAppStatusAC('succeeded'));
 
+                } else {
+                    handleServerAppError(res.data, dispatch);
                 }
             })
             .catch(error => {
-                dispatch(setAppErrorAC(error.message));
-                dispatch(setAppStatusAC('failed'));
+                handleServerNetworkError(error, dispatch);
             });
     }
 }
@@ -239,11 +243,13 @@ export const updateTaskTitileTC = (todolistId: string, taskId: string, title: st
                     dispatch(changeTaskTitleAC(taskId, title, todolistId));
                     dispatch(setAppStatusAC('succeeded'));
 
+                } else {
+                    handleServerAppError(res.data, dispatch);
+
                 }
             })
             .catch(error => {
-                dispatch(setAppErrorAC(error.message));
-                dispatch(setAppStatusAC('failed'));
+                handleServerNetworkError(error, dispatch);
             });
 
     }

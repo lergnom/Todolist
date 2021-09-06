@@ -27,6 +27,7 @@ import {createTaskTC, removeTaskTC, updateTaskStatusTC, updateTaskTitileTC} from
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
 import {TaskStatuses, TaskType} from './api/todolists-api'
+import {ErrorSnackbar} from "./components/ErrorSnackbar/ErrorSnackbar";
 
 
 export type TasksStateType = {
@@ -95,6 +96,7 @@ function App() {
 
     return (
         <div className="App">
+            <ErrorSnackbar />
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">

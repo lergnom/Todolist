@@ -143,6 +143,7 @@ export const fetchTasks = (todolistId: string) => {
         todolistsAPI.getTasks(todolistId)
             .then(res => {
                 if (res.data.error === null) {
+                    console.log(res.data.items);
                     dispatch(setTasks(todolistId, res.data.items));
                     dispatch(setAppStatusAC('succeeded'));
                 } else {

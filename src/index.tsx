@@ -6,16 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import {store} from './state/store';
 import {Login} from "./features/Login";
-import {Route} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <Route exact path={"/"} render={() => <App/>}/>
-            <Route path={"/login"} render={() => <Login/>}/>
-
-
-        </Provider>
+        <BrowserRouter>
+            <Provider store={store}>
+                <Switch>
+                    <Route exact path={"/"} render={() => <App/>}/>
+                    <Route path={"/login"} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                    <Redirect from={'*'} to={'/404'}/>
+                </Switch>
+            </Provider>
+        </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
 );

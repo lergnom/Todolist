@@ -5,11 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import {store} from './state/store';
+import {Login} from "./features/Login";
+import {Route} from 'react-router-dom';
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <App/>
+            <Route exact path={"/"} render={() => <App/>}/>
+            <Route path={"/login"} render={() => <Login/>}/>
+
+
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

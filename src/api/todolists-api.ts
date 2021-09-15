@@ -14,12 +14,18 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
+export type  LoginParamsType = {
+    id: number,
+    email: string,
+    login: string,
+}
 
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D
 }
+
 
 export enum TaskStatuses {
     New = 0,
@@ -95,5 +101,11 @@ export const todolistsAPI = {
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
+    }
+}
+
+export const authAPI = {
+    login() {
+        return instance.get<ResponseType<LoginParamsType>>(`/auth/me`)
     }
 }
